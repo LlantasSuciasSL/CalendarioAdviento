@@ -24,9 +24,40 @@
   let opened = new Set(store.get(':opened', []));
   const saveOpened = () => store.set(':opened', [...opened]);
 
-  /* ---------- fechas ---------- */
-  const [Y, M, D] = CFG.startDate.split('-').map(Number);
-  const dayDate = (day) => new Date(Y, M - 1, D + day - 1);
+  /* ---------- calendario: qué días de diciembre hay sobre ----------
+     mode 'pares'   → 2, 4, 6 … 24
+     mode 'impares' → 1, 3, 5 … 23
+     mode 'todos'   → 12 días seguidos desde startDay
+     Prioridad: enlace (?dias=…&inicio=…) > panel de admin (este navegador) > gifts.js */
+  const MODES = { pares: 'Pares', impares: 'Impares', todos: 'Todos seguidos' };
+  function baseSchedule() {
+    const s = { mode: 'todos', month: 12, startDay: 13 };
+    if (CFG.schedule) Object.assign(s, CFG.schedule);
+    else if (CFG.startDate) { const p = CFG.startDate.split('-').map(Number); s.month = p[1]; s.startDay = p[2]; }
+    return s;
+  }
+  function cleanSchedule(s) {
+    const out = { mode: MODES[s.mode] ? s.mode : 'todos', month: clamp(Number(s.month) || 12, 1, 12), startDay: clamp(Math.round(Number(s.startDay) || 13), 1, 20) };
+    return out;
+  }
+  function readSchedule() {
+    const s = baseSchedule();
+    const saved = store.get(':schedule', null);
+    if (saved) Object.assign(s, saved);
+    const q = params.get('dias');
+    if (q && MODES[q]) s.mode = q;
+    if (params.get('inicio')) s.startDay = Number(params.get('inicio'));
+    return cleanSchedule(s);
+  }
+  function scheduleDays(s) {
+    if (s.mode === 'pares') return Array.from({ length: 12 }, (_, i) => 2 + i * 2);
+    if (s.mode === 'impares') return Array.from({ length: 12 }, (_, i) => 1 + i * 2);
+    return Array.from({ length: 12 }, (_, i) => s.startDay + i);
+  }
+  let SCHED = readSchedule();
+  let DAYS = scheduleDays(SCHED);
+  const dayDate = (n) => new Date(CFG.year, SCHED.month - 1, DAYS[n - 1]);
+  const calDay = (n) => DAYS[n - 1];
   const fmtDate = (d) => `${d.getDate()} ${MONTHS[d.getMonth()]}`;
   const isUnlocked = (day) => PREVIEW || Date.now() >= dayDate(day).getTime();
   const isToday = (day) => { const d = dayDate(day), n = new Date(); return d.toDateString() === n.toDateString(); };
@@ -64,7 +95,7 @@
         <div class="pack__burst">${burst(t.c3, t.c1)}</div>
         <div class="pack__mascot">${art(t.mascot)}</div>
         <div class="pack__logo">${logoHTML()}</div>
-        <div class="pack__badge">${pad(day)}</div>
+        <div class="pack__badge">${pad(calDay(day))}</div>
         <div class="pack__name">${esc(t.name)}</div>
         <div class="pack__band"><i>1</i>Regalo especial</div>
         <div class="pack__layer pack__pillow"></div>
@@ -100,7 +131,7 @@
       <div class="tcard__head">
         <span class="tcard__stage">Regalo</span>
         <h3 class="tcard__name" style="font-size:${nameSize(g.name)}cqw">${esc(g.name)}</h3>
-        <span class="tcard__hp"><small>DÍA</small><b>${pad(g.day)}</b></span>
+        <span class="tcard__hp"><small>DÍA</small><b>${pad(calDay(g.day))}</b></span>
         <span class="tcard__type">${art('spark')}</span>
       </div>`;
     const ability = `
@@ -167,7 +198,7 @@
         <div class="ticket__perf"></div>
         <div class="ticket__stub">
           <div class="ticket__admit">Entrada<small>Admite 1 · ${esc(g.effect || 'Pase')}</small></div>
-          <div class="ticket__day">DÍA<b>${pad(g.day)}</b>${fmtDate(dayDate(g.day)).toUpperCase()}</div>
+          <div class="ticket__day">DÍA<b>${pad(calDay(g.day))}</b>${fmtDate(dayDate(g.day)).toUpperCase()}</div>
           <div class="ticket__barcode">${bars(g.day * 13, 46)}</div>
           <div class="ticket__code">${code}</div>
         </div>
@@ -201,7 +232,7 @@
           <div class="l">
             <span>${CFG.year} Adviento ${esc(CFG.owner)}</span>
             <span>${esc(g.name)}</span>
-            <span>Día ${pad(g.day)} · ${g.type === 'ticket' ? 'Entrada' : RAR_NAME[g.rarity] || 'Regalo'}</span>
+            <span>Día ${pad(calDay(g.day))} · ${g.type === 'ticket' ? 'Entrada' : RAR_NAME[g.rarity] || 'Regalo'}</span>
             <div class="slab__bar">${bars(g.day * 31, 30)}</div>
           </div>
           <div class="r">
@@ -493,11 +524,11 @@
       const lock = !unlocked ? iceHTML(g.day, date) : '';
       return `
       <div class="slot ${unlocked ? '' : 'is-locked'} ${today && !isOpen ? 'is-today' : ''} ${isOpen ? 'is-open' : ''}" style="--i:${i};${themeVars(t)}" data-day="${g.day}">
-        <button class="slot__btn" data-day="${g.day}" aria-label="Día ${g.day}${isOpen ? ', ver regalo' : unlocked ? ', abrir sobre' : ', bloqueado hasta el ' + date}">
+        <button class="slot__btn" data-day="${g.day}" aria-label="Día ${calDay(g.day)}${isOpen ? ', ver regalo' : unlocked ? ', abrir sobre' : ', bloqueado hasta el ' + date}">
           ${isOpen ? slabHTML(g) : packHTML(g.day)}
           ${lock}
         </button>
-        <div class="slot__label"><b>DÍA ${pad(g.day)}</b>${tag}</div>
+        <div class="slot__label"><b>DÍA ${pad(calDay(g.day))}</b>${tag}</div>
       </div>`;
     }).join('');
 
@@ -526,7 +557,7 @@
       sfx.freeze();
       slot.classList.remove('shake', 'is-hit'); void slot.offsetWidth; slot.classList.add('shake', 'is-hit');
       if (navigator.vibrate) try { navigator.vibrate([15, 40, 15]); } catch (_) { /* noop */ }
-      toast(`❄️ ¡Sigue congelado! El sobre del día ${day} se descongela el ${fmtDate(dayDate(day))}.`);
+      toast(`❄️ ¡Sigue congelado! El sobre del día ${calDay(day)} se descongela el ${fmtDate(dayDate(day))}.`);
       return;
     }
     openStage(day, btn.querySelector('.pack, .slab'), opened.has(day));
@@ -544,7 +575,7 @@
     const d = Math.floor(s / 86400); s %= 86400;
     const h = Math.floor(s / 3600); s %= 3600;
     const m = Math.floor(s / 60); s %= 60;
-    cdEl.querySelector('.countdown__label').textContent = `Día ${pad(next.day)} en`;
+    cdEl.querySelector('.countdown__label').textContent = `Día ${pad(calDay(next.day))} en`;
     cdTime.textContent = (d ? d + 'd ' : '') + `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
   setInterval(updateCountdown, 1000);
@@ -616,7 +647,7 @@
       cardWrap.style.transform = 'scale(1.08)';
       cardWrap.querySelector('.flip').classList.add('is-front');
       stage.classList.add('is-done', 'is-revealed');
-      setTitle(`Día ${pad(day)} · ${g.type === 'ticket' ? 'Entrada' : RAR_NAME[g.rarity]}`, g.name);
+      setTitle(`Día ${pad(calDay(day))} · ${g.type === 'ticket' ? 'Entrada' : RAR_NAME[g.rarity]}`, g.name);
       hintEl.textContent = 'Mueve la carta para ver el brillo · tócala para darle la vuelta';
       setActions([
         ['Volver a la colección', closeStage],
@@ -629,7 +660,7 @@
     }
 
     opener.classList.add('is-idle');
-    setTitle(`Día ${pad(day)} · ${fmtDate(dayDate(day))}`, t.name);
+    setTitle(`Día ${pad(calDay(day))} · ${fmtDate(dayDate(day))}`, t.name);
     hintEl.textContent = 'Desliza el dedo por la parte de arriba para rasgar el sobre ✂';
     setActions([['Abrir con un toque', () => completeTear(1), true]]);
     guide.style.setProperty('--gw', opener.clientWidth * 0.92 + 'px');
@@ -810,7 +841,7 @@
     current.fresh = true;
     state = 'done';
     stage.classList.add('is-done');
-    setTitle(`¡Regalo del día ${pad(day)}!${g.type === 'ticket' ? ' · Entrada' : ' · ' + RAR_NAME[g.rarity]}`, g.name);
+    setTitle(`¡Regalo del día ${pad(calDay(day))}!${g.type === 'ticket' ? ' · Entrada' : ' · ' + RAR_NAME[g.rarity]}`, g.name);
     await wait(700); if (!alive()) return;
     hintEl.textContent = 'Mueve la carta para ver el brillo · tócala para darle la vuelta';
     setActions([
@@ -841,7 +872,7 @@
       try { blob = await window.htmlToImage.toBlob(card, opts); }
       catch (err) { blob = await window.htmlToImage.toBlob(card, { ...opts, skipFonts: true }); }
       if (!blob) throw new Error('vacío');
-      const name = `adviento-${slug(CFG.owner)}-dia-${pad(g.day)}-${slug(g.name)}.png`;
+      const name = `adviento-${slug(CFG.owner)}-dia-${pad(calDay(g.day))}-${slug(g.name)}.png`;
       const file = typeof File === 'function' ? new File([blob], name, { type: 'image/png' }) : null;
       const touch = matchMedia('(pointer: coarse)').matches;
       if (touch && file && navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -851,7 +882,7 @@
         saveBlob(blob, name);
       }
       sfx.click();
-      toast(`✨ ¡Carta del día ${g.day} descargada!`);
+      toast(`✨ ¡Carta del día ${calDay(g.day)} descargada!`);
     } catch (err) {
       console.error(err);
       toast('No se ha podido generar la imagen. Inténtalo de nuevo.');
@@ -904,9 +935,153 @@
 
   addEventListener('resize', () => { if (!stage.hidden) fx.resize(); });
 
+  /* =========================================================
+     PANEL DE ADMIN · reparto de días (pares / impares / seguidos)
+     ========================================================= */
+  const admin = $('#admin'), admBody = $('#adminBody'), admLock = $('#adminLock');
+  const WEEK = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  const WEEKDAY = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+  let draft = null;
+
+  const adminUnlocked = () => {
+    if (!CFG.adminPin) return true;
+    try { return sessionStorage.getItem(KEY + ':admin') === '1'; } catch (e) { return false; }
+  };
+  function openAdmin() {
+    draft = { ...SCHED };
+    admin.hidden = false;
+    document.body.classList.add('is-locked-scroll');
+    const ok = adminUnlocked();
+    admLock.hidden = ok; admBody.hidden = !ok;
+    $('#adminErr').textContent = '';
+    if (ok) paintAdmin(); else setTimeout(() => $('#adminPin').focus(), 60);
+  }
+  function closeAdmin() {
+    admin.hidden = true;
+    if (stage.hidden) document.body.classList.remove('is-locked-scroll');
+  }
+  function stripScheduleParams() {
+    if (!params.has('dias') && !params.has('inicio')) return;
+    params.delete('dias'); params.delete('inicio');
+    const q = params.toString();
+    try { history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash); } catch (e) { /* noop */ }
+  }
+  function applySchedule() {
+    SCHED = readSchedule();
+    DAYS = scheduleDays(SCHED);
+    render();
+  }
+
+  function paintAdmin() {
+    const d0 = cleanSchedule(draft);
+    const days = scheduleDays(d0);
+    admin.querySelectorAll('input[name="admMode"]').forEach((r) => { r.checked = r.value === d0.mode; });
+    $('#admStartRow').hidden = d0.mode !== 'todos';
+    const sel = $('#admStart');
+    if (!sel.options.length) for (let d = 1; d <= 20; d++) sel.add(new Option(`${d} de diciembre`, d));
+    sel.value = d0.startDay;
+    $('#admEnd').textContent = `→ termina el ${d0.startDay + 11} dic`;
+    $('#admYear').textContent = CFG.year;
+
+    // mini calendario del mes
+    const first = new Date(CFG.year, d0.month - 1, 1);
+    const offset = (first.getDay() + 6) % 7;
+    const nDays = new Date(CFG.year, d0.month, 0).getDate();
+    const now = new Date();
+    let h = WEEK.map((w) => `<span class="cal__wd">${w}</span>`).join('');
+    for (let i = 0; i < offset; i++) h += '<span class="cal__pad"></span>';
+    for (let d = 1; d <= nDays; d++) {
+      const idx = days.indexOf(d);
+      const today = now.getFullYear() === CFG.year && now.getMonth() === d0.month - 1 && now.getDate() === d ? ' is-today' : '';
+      if (idx >= 0) {
+        const t = THEMES[idx + 1] || THEMES[1];
+        h += `<span class="cal__d is-gift${today}" style="${themeVars(t)}" title="Sobre ${idx + 1}">${d}<i>${idx + 1}</i></span>`;
+      } else {
+        h += `<span class="cal__d${d === 24 ? ' is-eve' : ''}${d === 25 ? ' is-xmas' : ''}${today}">${d}</span>`;
+      }
+    }
+    $('#admCal').innerHTML = h;
+
+    // lista de sobres con su fecha
+    $('#admList').innerHTML = gifts.map((g) => {
+      const dt = new Date(CFG.year, d0.month - 1, days[g.day - 1]);
+      const t = THEMES[g.day] || THEMES[1];
+      const st = opened.has(g.day) ? '<em class="st st--open">Abierto</em>'
+        : Date.now() >= dt.getTime() ? '<em class="st st--ready">Disponible</em>'
+        : '<em class="st st--ice">❄ Congelado</em>';
+      const kind = g.type === 'ticket' ? 'Entrada' : 'Carta ' + (RAR_NAME[g.rarity] || '').toLowerCase();
+      return `<li style="${themeVars(t)}">
+        <span class="admin__num">${pad(g.day)}</span>
+        <span class="admin__date"><b>${dt.getDate()}</b>${WEEKDAY[dt.getDay()]}</span>
+        <span class="admin__gift">${esc(g.name)}<small>${kind}</small></span>
+        ${st}
+      </li>`;
+    }).join('');
+
+    const changed = JSON.stringify(d0) !== JSON.stringify(SCHED);
+    const save = $('#admSave');
+    save.disabled = !changed;
+    save.textContent = changed ? 'Guardar y aplicar' : '✓ Aplicado';
+  }
+
+  function copyText(text, okMsg) {
+    const fallback = () => { window.prompt('Copia este texto:', text); };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => toast(okMsg)).catch(fallback);
+    } else fallback();
+  }
+
+  admin.addEventListener('change', (e) => {
+    if (e.target.name === 'admMode') { draft.mode = e.target.value; paintAdmin(); }
+    if (e.target.id === 'admStart') { draft.startDay = Number(e.target.value); paintAdmin(); }
+  });
+  admin.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeAdmin(); });
+  admLock.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = $('#adminPin');
+    if (String(input.value).trim() === String(CFG.adminPin)) {
+      try { sessionStorage.setItem(KEY + ':admin', '1'); } catch (err) { /* noop */ }
+      input.value = '';
+      admLock.hidden = true; admBody.hidden = false; paintAdmin();
+    } else {
+      $('#adminErr').textContent = 'PIN incorrecto';
+      sfx.deny();
+      admLock.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+      input.select();
+    }
+  });
+  $('#admSave').addEventListener('click', () => {
+    store.set(':schedule', cleanSchedule(draft));
+    stripScheduleParams();
+    applySchedule();
+    draft = { ...SCHED };
+    paintAdmin();
+    toast(`✅ Sobres repartidos: ${MODES[SCHED.mode].toLowerCase()} (${DAYS[0]}–${DAYS[11]} dic)`);
+  });
+  $('#admReset').addEventListener('click', () => {
+    store.set(':schedule', null);
+    stripScheduleParams();
+    applySchedule();
+    draft = { ...SCHED };
+    paintAdmin();
+    toast('Configuración de gifts.js restaurada');
+  });
+  $('#admLink').addEventListener('click', () => {
+    const d0 = cleanSchedule(draft);
+    const url = location.origin + location.pathname + `?dias=${d0.mode}` + (d0.mode === 'todos' ? `&inicio=${d0.startDay}` : '');
+    copyText(url, '🔗 Enlace copiado: envíaselo a quien abre el calendario');
+  });
+  $('#admCode').addEventListener('click', () => {
+    const d0 = cleanSchedule(draft);
+    copyText(`schedule: { mode: '${d0.mode}', month: ${d0.month}, startDay: ${d0.startDay} },`, '{ } Código copiado: pégalo en assets/js/gifts.js');
+  });
+  $('#adminBtn').addEventListener('click', openAdmin);
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !admin.hidden) closeAdmin(); });
+
   /* ---------- inicio ---------- */
   $('#yearLabel').textContent = CFG.year;
   $('#yearLabel2').textContent = CFG.year;
   $('#ownerLabel').textContent = CFG.owner;
   render();
+  if (params.has('admin')) openAdmin();
 })();

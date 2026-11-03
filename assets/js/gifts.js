@@ -6,7 +6,7 @@
    Los días marcados con  ⏳ PENDIENTE  son de relleno: sustitúyelos.
 
    CAMPOS
-     day         1-12 (el día 1 se abre en "startDate")
+     day         nº de sobre 1-12 (su fecha la decide "schedule")
      type        'card'   → carta coleccionable
                  'ticket' → entrada (plan, evento, experiencia)
      name        nombre del regalo (título de la carta)
@@ -31,7 +31,16 @@
 window.ADVIENTO = {
   owner: 'Álvaro',
   year: 2026,
-  startDate: '2026-12-13', // ← fecha del DÍA 1 (AAAA-MM-DD)
+
+  /* 📅 REPARTO DE LOS 12 SOBRES EN DICIEMBRE
+     mode: 'pares'   → días 2, 4, 6 … 24
+           'impares' → días 1, 3, 5 … 23
+           'todos'   → 12 días seguidos empezando en startDay (13 → del 13 al 24)
+     También se cambia desde el ⚙ Panel de admin (pie de página o ?admin). */
+  schedule: { mode: 'todos', month: 12, startDay: 13 },
+
+  // 🔐 PIN del panel de admin (déjalo en '' para entrar sin PIN)
+  adminPin: '2412',
 
   gifts: [
     // ───────────────────────── DÍA 1 ─────────────────────────

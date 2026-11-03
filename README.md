@@ -155,13 +155,34 @@ Todas son vectoriales, originales y animadas.
 
 ## 📅 Fechas y desbloqueo
 
-En `gifts.js`:
+Los 12 sobres se reparten en diciembre de tres formas:
+
+| Modo | Días con sobre |
+|---|---|
+| `pares` | 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 |
+| `impares` | 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 |
+| `todos` | 12 días seguidos desde `startDay` (con `13`: del 13 al 24) |
+
+El sobre Nº 1 cae en el primer día del reparto, el Nº 2 en el segundo, y así hasta el 12. En la web, en las cartas y en las fundas aparece el **día real del mes** (por ejemplo, "DÍA 06" si va en pares). El número de colección (`03/12`) no cambia. Cada sobre se desbloquea a las 00:00 de su día.
+
+### ⚙ Panel de admin
+
+Ábrelo desde **"⚙ Panel de admin"** en el pie de página, o añadiendo `?admin` a la URL. Pide el PIN definido en `adminPin` (por defecto `2412`). Si lo dejas en `''`, se entra sin PIN.
+
+En el panel:
+- Eliges **Pares**, **Impares** o **Todos seguidos** (y en este último, el día de inicio).
+- Ves el **mini calendario de diciembre** con cada sobre en su día y la **lista** con la fecha, el regalo y su estado (❄ congelado, disponible o abierto).
+- **Guardar y aplicar** cambia el reparto al instante, pero **solo en ese navegador**.
+- **🔗 Copiar enlace** genera una URL como `…/?dias=pares` o `…/?dias=todos&inicio=13`. Envíasela a quien abre el calendario y lo verá así en su móvil.
+- **{ } Copiar código** da la línea para pegar en `gifts.js` y que quede fijo para todo el mundo al publicar:
 
 ```js
-startDate: '2026-12-13', // fecha del DÍA 1
+schedule: { mode: 'pares', month: 12, startDay: 13 },
 ```
 
-El día N se desbloquea a las 00:00 de `startDate + (N-1)`. Con `13 dic`, el día 12 cae en Nochebuena (24 dic).
+Prioridad cuando hay varias configuraciones: **enlace** > **guardado en el panel** > **`gifts.js`**. "Volver a lo que diga gifts.js" borra lo guardado en el panel.
+
+> El PIN solo evita miradas curiosas: la web es estática y `gifts.js` es público.
 
 **Días aún no disponibles → ❄ congelados.** El sobre aparece encerrado en un bloque de hielo, con escarcha, carámbanos y grietas, y lleva un candado helado con el mensaje **FREEZE**, la fecha en que se descongela y los días que faltan. Si lo pulsas antes de tiempo, el hielo tiembla, se agrieta, saltan esquirlas y suena un golpe helado. A medianoche se descongela solo, sin recargar la página.
 

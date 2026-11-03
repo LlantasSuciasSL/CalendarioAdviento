@@ -40,6 +40,7 @@
   <footer class="foot">
     <p>Hecho con cariño para <span id="ownerLabel">Álvaro</span> ✦ Temporada <span id="yearLabel2">2026</span></p>
     <button class="link-btn" id="resetBtn">Reiniciar sobres</button>
+    <button class="link-btn" id="adminBtn">⚙ Panel de admin</button>
   </footer>
 
   <!-- ESCENARIO DE APERTURA -->
@@ -72,6 +73,77 @@
     <div class="stage__bottom">
       <p class="stage__hint" id="stageHint">Desliza el dedo por la parte de arriba para rasgar el sobre</p>
       <div class="stage__actions" id="stageActions"></div>
+    </div>
+  </div>
+
+  <!-- PANEL DE ADMIN -->
+  <div class="admin" id="admin" hidden role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="admin__backdrop" data-close></div>
+    <div class="admin__panel">
+      <header class="admin__head">
+        <div>
+          <span class="admin__kicker">⚙ Panel de admin</span>
+          <h2 id="adminTitle">Reparto de los 12 sobres</h2>
+        </div>
+        <button class="icon-btn" data-close aria-label="Cerrar">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+
+      <form class="admin__lock" id="adminLock" autocomplete="off">
+        <div class="admin__lock-ico">🔐</div>
+        <p>Zona solo para el organizador. Introduce el PIN.</p>
+        <input type="password" inputmode="numeric" id="adminPin" placeholder="PIN" aria-label="PIN" />
+        <button class="btn" type="submit">Entrar</button>
+        <p class="admin__err" id="adminErr" role="alert"></p>
+      </form>
+
+      <div class="admin__body" id="adminBody" hidden>
+        <fieldset class="seg">
+          <legend>¿Qué días de diciembre hay sobre?</legend>
+          <label class="seg__opt">
+            <input type="radio" name="admMode" value="pares" />
+            <span class="seg__card"><b>Pares</b><small>2, 4, 6 … 24 dic</small><i class="seg__dots"><em></em><s></s><em></em><s></s><em></em><s></s></i></span>
+          </label>
+          <label class="seg__opt">
+            <input type="radio" name="admMode" value="impares" />
+            <span class="seg__card"><b>Impares</b><small>1, 3, 5 … 23 dic</small><i class="seg__dots"><s></s><em></em><s></s><em></em><s></s><em></em></i></span>
+          </label>
+          <label class="seg__opt">
+            <input type="radio" name="admMode" value="todos" />
+            <span class="seg__card"><b>Todos seguidos</b><small>12 días consecutivos</small><i class="seg__dots"><em></em><em></em><em></em><em></em><em></em><em></em></i></span>
+          </label>
+        </fieldset>
+
+        <div class="admin__start" id="admStartRow">
+          <label for="admStart">Empieza el</label>
+          <select id="admStart"></select>
+          <span id="admEnd"></span>
+        </div>
+
+        <div class="admin__grid">
+          <section>
+            <h3 class="admin__h3">Diciembre <span id="admYear"></span></h3>
+            <div class="cal" id="admCal"></div>
+          </section>
+          <section>
+            <h3 class="admin__h3">Calendario de sobres</h3>
+            <ol class="admin__list" id="admList"></ol>
+          </section>
+        </div>
+
+        <p class="admin__note">
+          <b>Guardar y aplicar</b> lo cambia en <u>este navegador</u>. Para que lo vea quien abre el calendario en su móvil,
+          envíale el <b>enlace</b> o pega el <b>código</b> en <code>assets/js/gifts.js</code> y publica.
+        </p>
+
+        <div class="admin__actions">
+          <button class="btn" id="admSave" type="button">Guardar y aplicar</button>
+          <button class="btn btn--ghost" id="admLink" type="button">🔗 Copiar enlace</button>
+          <button class="btn btn--ghost" id="admCode" type="button">{ } Copiar código</button>
+          <button class="link-btn" id="admReset" type="button">Volver a lo que diga gifts.js</button>
+        </div>
+      </div>
     </div>
   </div>
 
