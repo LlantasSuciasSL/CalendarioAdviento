@@ -91,7 +91,7 @@ window.ADVIENTO = {
     {
       day: 6, type: 'card', rarity: 'holo',
       name: 'Mercado de Navidad', art: 'market',
-      effect: 'Paseo de Luces', power: '80',
+      effect: 'Aroma de Navidad', power: '80',
       description: 'Una tarde por el mercado de Navidad: luces, puestos, chocolate caliente y castañas. Para dos.',
     },
 

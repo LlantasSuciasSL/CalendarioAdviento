@@ -48,7 +48,7 @@ window.ADV_CATALOG = [
     description: 'Tu música favorita, sin interrupciones. Aísla de villancicos no deseados.', flavor: 'Volumen recomendado: alto.' },
 
   /* ───────── Planes (cartas) ───────── */
-  { cat: 'Planes', type: 'card', rarity: 'holo', name: 'Mercado de Navidad', art: 'market', effect: 'Paseo de Luces', power: '80',
+  { cat: 'Planes', type: 'card', rarity: 'holo', name: 'Mercado de Navidad', art: 'market', effect: 'Aroma de Navidad', power: '80',
     description: 'Una tarde por el mercado de Navidad: luces, puestos, chocolate caliente y castañas. Para dos.' },
   { cat: 'Planes', type: 'card', rarity: 'holo', name: 'Cena para Dos', art: 'dinner2', effect: '¡Brindis!', power: '2×',
     description: 'Una cena especial para dos: velas, buena comida y un brindis navideño. Postre obligatorio.' },
