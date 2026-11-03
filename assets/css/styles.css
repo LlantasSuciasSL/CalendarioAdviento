@@ -340,7 +340,7 @@ button { font: inherit; color: inherit; }
   box-shadow: 0 0 0 .3cqw rgba(0,0,0,.25) inset;
   text-transform: uppercase;
 }
-.tcard__name { margin: 0; flex: 1; min-width: 0; font-size: 6.3cqw; font-weight: 900; letter-spacing: -.01em; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tcard__name { margin: 0; flex: 1; min-width: 0; font-size: 6.3cqw; font-weight: 900; letter-spacing: -.02em; line-height: 1; white-space: nowrap; overflow: hidden; }
 .tcard__hp { flex: none; display: flex; align-items: baseline; gap: .6cqw; color: var(--red-2); }
 .tcard__hp small { font-size: 2.8cqw; font-weight: 900; color: #14183a; }
 .tcard__hp b { font-family: var(--font-display); font-weight: 400; font-size: 8.4cqw; line-height: .8; }

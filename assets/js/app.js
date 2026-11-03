@@ -88,6 +88,9 @@
     <div class="tcard__obj">${objHTML(g)}</div>
     ${sparkles(g.day)}`;
 
+  // reduce la letra del nombre para que quepa entero en la cabecera
+  const nameSize = (n) => Math.max(3.6, Math.min(6.3, 6.3 * 12 / Math.max(12, String(n).length))).toFixed(2);
+
   function cardHTML(g) {
     if (g.type === 'ticket') return ticketHTML(g);
     const t = THEMES[g.day] || THEMES[1];
@@ -96,7 +99,7 @@
     const head = `
       <div class="tcard__head">
         <span class="tcard__stage">Regalo</span>
-        <h3 class="tcard__name">${esc(g.name)}</h3>
+        <h3 class="tcard__name" style="font-size:${nameSize(g.name)}cqw">${esc(g.name)}</h3>
         <span class="tcard__hp"><small>DÍA</small><b>${pad(g.day)}</b></span>
         <span class="tcard__type">${art('spark')}</span>
       </div>`;

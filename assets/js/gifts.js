@@ -1,101 +1,143 @@
-/* =========================================================
-   CONFIGURACIÓN DEL CALENDARIO  ✏️  (edita aquí tus regalos)
-   ---------------------------------------------------------
-   startDate : fecha del DÍA 1 (AAAA-MM-DD). Cada día siguiente
-               se desbloquea a las 00:00 del día correspondiente.
-   Para cada regalo:
-     type     : 'card'  -> carta coleccionable
-                'ticket'-> entrada (concierto, cine, viaje...)
-     name     : nombre del regalo
-     art      : ilustración incluida (star, gift, tree, snowflake, bell,
-                candy, ornament, mug, gingerbread, candle, snowman,
-                music, film, crown)
-     image    : (opcional) ruta a tu propia imagen, p. ej.
-                'assets/img/dia1.png'  (PNG sin fondo queda genial)
-     rarity   : 'comun' | 'rara' | 'holo' | 'secreta'
-                (holo y secreta usan diseño full-art holográfico)
-     effect   : título del "ataque/efecto" de la carta
-     description, flavor : textos de la carta
-     ticket   : solo para type 'ticket' -> { date, time, place, seat }
+/* =====================================================================
+   🎁  ZONA DE REGALOS  ·  edita solo este archivo
+   =====================================================================
+   Cada bloque { ... } es un día. Para cambiar un regalo, cambia sus
+   textos. Para moverlo de día, cambia el número de "day".
+   Los días marcados con  ⏳ PENDIENTE  son de relleno: sustitúyelos.
 
-   Truco: abre la web con  ?preview  al final de la URL para
-   desbloquear todos los sobres y probar las animaciones.
-   ========================================================= */
+   CAMPOS
+     day         1-12 (el día 1 se abre en "startDate")
+     type        'card'   → carta coleccionable
+                 'ticket' → entrada (plan, evento, experiencia)
+     name        nombre del regalo (título de la carta)
+     art         ilustración incluida (ver lista abajo)
+     image       (opcional) tu foto/imagen: 'assets/img/dia1.png'
+                 si la pones, sustituye a "art". Mejor PNG sin fondo.
+     rarity      'comun' | 'rara'      → carta de marco clásico
+                 'holo'  | 'secreta'   → carta full-art holográfica
+     effect      nombre del "ataque" (en full-art sale en grande)
+     power       número a la derecha del ataque (decorativo)
+     description texto principal
+     flavor      frase en cursiva (solo cartas clásicas)
+     ticket      solo entradas: { date, time, place, seat }
+
+   ILUSTRACIONES DISPONIBLES (art)
+     chococal  candles  sweater  paint  pajama  market  vinyl
+     star  gift  tree  snowflake  bell  candy  ornament  mug
+     gingerbread  candle  snowman  music  film  crown
+
+   Truco: añade ?preview a la URL para desbloquear todo y probar.
+   ===================================================================== */
 window.ADVIENTO = {
   owner: 'Álvaro',
   year: 2026,
-  startDate: '2026-12-13',
+  startDate: '2026-12-13', // ← fecha del DÍA 1 (AAAA-MM-DD)
 
   gifts: [
+    // ───────────────────────── DÍA 1 ─────────────────────────
     {
-      day: 1, type: 'card', name: 'Taza Mágica', art: 'mug', rarity: 'comun',
-      effect: 'Chocolate Infinito', power: '30',
-      description: 'Mientras esta carta esté en juego, las tardes de invierno son un 50% más calentitas.',
-      flavor: 'Dicen que nunca se enfría del todo.',
+      day: 1, type: 'card', rarity: 'rara',
+      name: 'Calendario de Chocolate', art: 'chococal',
+      effect: 'Ventanita Dulce', power: '24',
+      description: 'Abre una ventanita cada día y roba un bombón. Si abres dos de golpe, nadie lo sabrá.',
+      flavor: 'Un calendario dentro de otro calendario.',
     },
+
+    // ───────────────────────── DÍA 2 ─────────────────────────
     {
-      day: 2, type: 'card', name: 'Bola de Cristal', art: 'ornament', rarity: 'rara',
-      effect: 'Reflejo Festivo', power: '40',
-      description: 'Roba una sonrisa del mazo de tu oponente. Si es diciembre, roba dos.',
-      flavor: 'En su interior brilla un pequeño universo.',
+      day: 2, type: 'card', rarity: 'comun',
+      name: 'Velas Navideñas', art: 'candles',
+      effect: 'Luz de Hogar', power: '30',
+      description: 'Enciende las tres a la vez y el salón se vuelve 100% acogedor. Huele a Navidad.',
+      flavor: 'Tres llamas, una misma noche.',
     },
+
+    // ───────────────────────── DÍA 3 ─────────────────────────
     {
-      day: 3, type: 'card', name: 'Galleta Legendaria', art: 'gingerbread', rarity: 'comun',
-      effect: 'Crujido Dulce', power: '20',
-      description: 'Lanza una moneda. Si sale cara, te comes la galleta. Si sale cruz, también.',
-      flavor: 'Nadie ha conseguido atraparla.',
+      day: 3, type: 'card', rarity: 'holo',
+      name: 'Jersey Feo de Navidad', art: 'sweater',
+      effect: '¡Jersey Feo!', power: '120',
+      description: 'Cuanto más feo, más poder. El reno brilla en la oscuridad. Uso obligatorio en cenas familiares.',
     },
+
+    // ───────────────────────── DÍA 4 ─────────────────────────
     {
-      day: 4, type: 'card', name: 'Vela Aromática', art: 'candle', rarity: 'rara',
-      effect: 'Llama Serena', power: '40',
-      description: 'Cura todo el estrés de uno de tus días. Aroma a canela incluido.',
-      flavor: 'Ilumina incluso las noches más largas.',
+      day: 4, type: 'card', rarity: 'rara',
+      name: 'DIY Pintura Navideña', art: 'paint',
+      effect: 'Pincelada Creativa', power: '50',
+      description: 'Pinta tus propios adornos de Navidad. Lo que se mancha, se queda como recuerdo.',
+      flavor: 'Hecho a mano, hecho con cariño.',
     },
+
+    // ───────────────────────── DÍA 5 ─────────────────────────  ⏳ PENDIENTE
     {
-      day: 5, type: 'card', name: 'Bastón Dulce', art: 'candy', rarity: 'comun',
+      day: 5, type: 'card', rarity: 'comun',
+      name: 'Bastón Dulce', art: 'candy',
       effect: 'Golpe de Azúcar', power: '30',
-      description: 'Este regalo hace 30 de daño a la rutina y deja un sabor a menta.',
+      description: 'Regalo sorpresa por desvelar. Este espacio está reservado para algo muy especial.',
       flavor: 'Rayas rojas, energía blanca.',
     },
+
+    // ───────────────────────── DÍA 6 ─────────────────────────
     {
-      day: 6, type: 'ticket', name: 'Concierto Sorpresa', art: 'music', rarity: 'holo',
-      effect: 'Pase VIP', description: 'Una noche de música en directo. ¡Prepara la voz!',
-      ticket: { date: 'Por desvelar', time: '21:00', place: 'Sorpresa', seat: 'Fila VIP · 06' },
+      day: 6, type: 'ticket', rarity: 'holo',
+      name: 'Mercado Navideño', art: 'market',
+      effect: 'Paseo Mágico',
+      description: 'Una tarde entre luces, puestos, chocolate caliente y castañas.',
+      ticket: { date: 'Diciembre', time: '18:00', place: 'Mercado navideño', seat: 'Paseo libre · 2 pers.' },
     },
+
+    // ───────────────────────── DÍA 7 ─────────────────────────
     {
-      day: 7, type: 'card', name: 'Amigo de Nieve', art: 'snowman', rarity: 'rara',
-      effect: 'Abrazo Helado', power: '50',
-      description: 'Protege a tus otros regalos de cualquier ataque de aburrimiento.',
-      flavor: 'Nunca se derrite si le das cariño.',
+      day: 7, type: 'card', rarity: 'rara',
+      name: 'Pijama de Navidad', art: 'pajama',
+      effect: 'Modo Sofá', power: '60',
+      description: 'Activa el modo manta + peli. Inmune a planes que impliquen salir de casa.',
+      flavor: 'Cuadros rojos, sueños dulces.',
     },
+
+    // ───────────────────────── DÍA 8 ─────────────────────────  ⏳ PENDIENTE
     {
-      day: 8, type: 'card', name: 'Campana de la Suerte', art: 'bell', rarity: 'holo',
-      effect: 'Tintineo Dorado', power: '60',
-      description: 'Cada vez que suene, busca en tu mazo un buen momento y ponlo en tu mano.',
+      day: 8, type: 'card', rarity: 'comun',
+      name: 'Campana de la Suerte', art: 'bell',
+      effect: 'Tintineo Dorado', power: '40',
+      description: 'Regalo sorpresa por desvelar. Este espacio está reservado para algo muy especial.',
       flavor: 'Su sonido se escucha a kilómetros.',
     },
+
+    // ───────────────────────── DÍA 9 ─────────────────────────  ⏳ PENDIENTE
     {
-      day: 9, type: 'card', name: 'Mini Árbol', art: 'tree', rarity: 'comun',
+      day: 9, type: 'card', rarity: 'comun',
+      name: 'Mini Árbol', art: 'tree',
       effect: 'Raíces Navideñas', power: '30',
-      description: 'Decora instantáneamente cualquier espacio. No requiere riego.',
+      description: 'Regalo sorpresa por desvelar. Este espacio está reservado para algo muy especial.',
       flavor: 'Pequeño, pero con mucho espíritu.',
     },
+
+    // ───────────────────────── DÍA 10 ────────────────────────
     {
-      day: 10, type: 'card', name: 'Copo Eterno', art: 'snowflake', rarity: 'rara',
-      effect: 'Ventisca Única', power: '50',
-      description: 'No hay dos iguales. Este es solo tuyo y congela el tiempo un instante.',
-      flavor: 'Cayó del cielo justo para ti.',
+      day: 10, type: 'card', rarity: 'holo',
+      name: 'Kylie Christmas', art: 'vinyl',
+      effect: 'Christmas Diva', power: '100',
+      description: 'El disco navideño de Kylie Minogue. Dale al play y la casa se convierte en una pista de baile.',
     },
+
+    // ───────────────────────── DÍA 11 ────────────────────────  ⏳ PENDIENTE
     {
-      day: 11, type: 'card', name: 'Estrella Fugaz', art: 'star', rarity: 'holo',
+      day: 11, type: 'card', rarity: 'rara',
+      name: 'Estrella Fugaz', art: 'star',
       effect: 'Deseo Concedido', power: '90',
-      description: 'Pide un deseo. Si es razonable, se cumple antes de fin de año.',
+      description: 'Regalo sorpresa por desvelar. Este espacio está reservado para algo muy especial.',
       flavor: 'Brilla una vez cada mil inviernos.',
     },
+
+    // ───────────────────────── DÍA 12 ────────────────────────  ⏳ PENDIENTE
     {
-      day: 12, type: 'ticket', name: 'Gran Estreno VIP', art: 'film', rarity: 'secreta',
-      effect: 'Gran Final', description: 'La experiencia final del calendario. Palomitas incluidas.',
-      ticket: { date: '24 DIC', time: '20:30', place: 'Sala Secreta', seat: 'Butaca 12 · Fila A' },
+      day: 12, type: 'ticket', rarity: 'secreta',
+      name: 'Gran Final', art: 'crown',
+      effect: 'Gran Final',
+      description: 'La experiencia final del calendario. Por desvelar…',
+      ticket: { date: '24 DIC', time: '—', place: 'Sorpresa', seat: 'VIP · 12' },
     },
   ],
 };
