@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Adviento Álvaro</title>
+  <meta name="description" content="Calendario de Adviento coleccionable: 12 sobres, 12 regalos." />
+  <meta name="theme-color" content="#070b22" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Rubik:ital,wght@0,400;0,500;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%81%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <canvas class="snow" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <div class="top__bar">
+      <span class="chip chip--progress"><b id="progressCount">0</b>/12 abiertos</span>
+      <button class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="Sonido">
+        <svg viewBox="0 0 24 24" class="ico-on"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" class="ico-off"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <h1 class="logo logo--hero">
+      <span class="logo__pre">Calendario de</span>
+      <span class="logo__main" data-text="ADVIENTO">ADVIENTO</span>
+      <span class="logo__pill">Álvaro · <span id="yearLabel">2026</span></span>
+    </h1>
+    <p class="top__lead">12 sobres. 12 regalos. Abre uno cada día y completa tu colección.</p>
+    <div class="countdown" id="countdown" hidden>
+      <span class="countdown__label">Próximo sobre en</span>
+      <span class="countdown__time" id="countdownTime">--</span>
+    </div>
+  </header>
+
+  <main class="board" id="board" aria-label="Sobres del calendario"></main>
+
+  <footer class="foot">
+    <p>Hecho con cariño para <span id="ownerLabel">Álvaro</span> ✦ Temporada <span id="yearLabel2">2026</span></p>
+    <button class="link-btn" id="resetBtn">Reiniciar sobres</button>
+  </footer>
+
+  <!-- ESCENARIO DE APERTURA -->
+  <div class="stage" id="stage" hidden aria-modal="true" role="dialog" aria-label="Abrir sobre">
+    <div class="stage__bg"></div>
+    <div class="stage__rays"></div>
+    <canvas class="stage__fx" id="fx"></canvas>
+    <div class="stage__flash"></div>
+
+    <button class="stage__close icon-btn" id="stageClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="stage__title" id="stageTitle"></div>
+
+    <div class="opener" id="opener">
+      <div class="opener__aura"></div>
+      <div class="opener__card" id="openerCard"></div>
+      <div class="opener__piece opener__piece--main" id="pieceMain"></div>
+      <div class="opener__piece opener__piece--top" id="pieceTop"></div>
+      <div class="opener__seam" id="seam"></div>
+      <div class="opener__guide" id="guide" aria-hidden="true">
+        <span class="opener__guide-line"></span>
+        <span class="opener__guide-finger">
+          <svg viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10l4.6.9a2 2 0 0 1 1.6 2.3l-.8 4.6A3 3 0 0 1 14.4 20H11a3 3 0 0 1-2.4-1.2L5.3 14.4a1.4 1.4 0 0 1 2.1-1.9L9 14z" fill="#fff" stroke="#0d1b4c" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="stage__bottom">
+      <p class="stage__hint" id="stageHint">Desliza el dedo por la parte de arriba para rasgar el sobre</p>
+      <div class="stage__actions" id="stageActions"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/gifts.js"></script>
+  <script src="assets/js/art.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
