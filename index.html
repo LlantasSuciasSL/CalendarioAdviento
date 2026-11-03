@@ -6,9 +6,8 @@
   <title>Adviento Álvaro</title>
   <meta name="description" content="Calendario de Adviento coleccionable: 12 sobres, 12 regalos." />
   <meta name="theme-color" content="#070b22" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Rubik:ital,wght@0,400;0,500;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="assets/fonts/luckiest-guy.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
   <link rel="stylesheet" href="assets/css/styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%81%3C/text%3E%3C/svg%3E" />
 </head>
@@ -78,6 +77,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="assets/vendor/html-to-image.min.js"></script>
   <script src="assets/js/gifts.js"></script>
   <script src="assets/js/art.js"></script>
   <script src="assets/js/app.js"></script>

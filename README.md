@@ -31,7 +31,7 @@ Abre **http://localhost:8000/?preview**.
 
 - `?preview` desbloquea **todos** los sobres para probar las animaciones.
 - Sin `?preview`, cada sobre se abre en su fecha real.
-- También puedes abrir `index.html` directamente con doble clic.
+- También puedes abrir `index.html` directamente con doble clic. (Para descargar cartas con su tipografía, mejor con el servidor.)
 
 ---
 
@@ -194,8 +194,10 @@ assets/
   css/styles.css      Estilos: sobres, cartas, entradas, fundas, animaciones
   js/gifts.js         ✏️ ZONA DE REGALOS (lo único que hay que editar)
   js/art.js           Ilustraciones SVG y diseños de sobre
-  js/app.js           Lógica: tablero, apertura, efectos y sonido
+  js/app.js           Lógica: tablero, apertura, efectos, sonido y descarga
   img/                Tus imágenes
+  fonts/              Tipografías locales (Luckiest Guy y Rubik, licencia OFL)
+  vendor/             html-to-image (MIT), para exportar la carta a PNG
 ```
 
 ---
@@ -211,6 +213,8 @@ En **Settings → Pages**, elige la rama y la carpeta `/ (root)`. La web quedar�
 **¿Cómo abro un sobre?** Desliza el dedo de lado a lado por la parte superior, o pulsa "Abrir con un toque".
 
 **¿Cómo veo el dorso de la carta?** Tócala una vez revelada.
+
+**¿Cómo descargo la carta del día?** Al revelarla (o al abrirla desde la colección) pulsa **⬇ Descargar carta**. Se genera un PNG en alta resolución (1260×1760) con fondo transparente, el brillo holográfico y, en las entradas, los troqueles recortados. Nombre del archivo: `adviento-alvaro-dia-03-jersey-feo-de-navidad.png`. En el móvil se abre el menú de compartir para guardarla en Fotos o enviarla por WhatsApp.
 
 **¿Se puede quitar el sonido?** Sí, con el botón del altavoz arriba a la derecha.
 

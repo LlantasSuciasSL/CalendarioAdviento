@@ -620,6 +620,7 @@
       hintEl.textContent = 'Mueve la carta para ver el brillo · tócala para darle la vuelta';
       setActions([
         ['Volver a la colección', closeStage],
+        [DL_LABEL, (e) => downloadCard(g, e.currentTarget), true],
         ['↻ Repetir apertura', () => openStage(day, null, false), true],
       ]);
       if (!reduceMotion) cardWrap.animate([{ transform: 'scale(.6) rotateY(-40deg)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.34,1.4,.64,1)' });
@@ -812,8 +813,59 @@
     setTitle(`¡Regalo del día ${pad(day)}!${g.type === 'ticket' ? ' · Entrada' : ' · ' + RAR_NAME[g.rarity]}`, g.name);
     await wait(700); if (!alive()) return;
     hintEl.textContent = 'Mueve la carta para ver el brillo · tócala para darle la vuelta';
-    setActions([['Guardar en la colección', closeStage]]);
+    setActions([
+      ['Guardar en la colección', closeStage],
+      [DL_LABEL, (e) => downloadCard(g, e.currentTarget), true],
+    ]);
     startIdleWobble(myRun);
+  }
+
+  /* ---------- descargar la carta como imagen PNG ---------- */
+  const DL_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
+  const DL_LABEL = `${DL_ICON} Descargar carta`;
+  const slug = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  async function downloadCard(g, btn) {
+    if (!window.htmlToImage) { toast('No se ha podido cargar el generador de imágenes.'); return; }
+    if (btn) { btn.disabled = true; btn.innerHTML = `${DL_ICON} Preparando…`; }
+    const host = document.createElement('div');
+    host.className = 'export-host';
+    host.innerHTML = cardHTML(g);
+    document.body.appendChild(host);
+    const card = host.firstElementChild;
+    try {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      await wait(80);
+      const opts = { pixelRatio: 2, cacheBust: true };
+      let blob;
+      try { blob = await window.htmlToImage.toBlob(card, opts); }
+      catch (err) { blob = await window.htmlToImage.toBlob(card, { ...opts, skipFonts: true }); }
+      if (!blob) throw new Error('vacío');
+      const name = `adviento-${slug(CFG.owner)}-dia-${pad(g.day)}-${slug(g.name)}.png`;
+      const file = typeof File === 'function' ? new File([blob], name, { type: 'image/png' }) : null;
+      const touch = matchMedia('(pointer: coarse)').matches;
+      if (touch && file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: g.name }); }
+        catch (err) { if (err && err.name !== 'AbortError') saveBlob(blob, name); }
+      } else {
+        saveBlob(blob, name);
+      }
+      sfx.click();
+      toast(`✨ ¡Carta del día ${g.day} descargada!`);
+    } catch (err) {
+      console.error(err);
+      toast('No se ha podido generar la imagen. Inténtalo de nuevo.');
+    } finally {
+      host.remove();
+      if (btn) { btn.disabled = false; btn.innerHTML = DL_LABEL; }
+    }
+  }
+  function saveBlob(blob, name) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = name; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
   }
 
   /* ---------- interacción con la carta revelada ---------- */
