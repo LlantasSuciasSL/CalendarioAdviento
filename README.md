@@ -9,15 +9,16 @@
 ## 📑 Índice
 
 1. [Arrancar el proyecto](#-arrancar-el-proyecto)
-2. [✏️ Zona de regalos: cambiar los objetos](#️-zona-de-regalos-cambiar-los-objetos)
-3. [Regalos actuales](#-regalos-actuales)
-4. [Usar tus propias imágenes](#-usar-tus-propias-imágenes)
-5. [Ilustraciones disponibles](#-ilustraciones-disponibles)
-6. [Fechas y desbloqueo](#-fechas-y-desbloqueo)
-7. [Personalizar los sobres](#-personalizar-los-sobres)
-8. [Estructura del proyecto](#-estructura-del-proyecto)
-9. [Publicar en GitHub Pages](#-publicar-en-github-pages)
-10. [Preguntas frecuentes](#-preguntas-frecuentes)
+2. [🎁 Cambiar los premios desde el panel (sin tocar código)](#-cambiar-los-premios-desde-el-panel-sin-tocar-código)
+3. [✏️ Zona de regalos: cambiar los objetos a mano](#️-zona-de-regalos-cambiar-los-objetos-a-mano)
+4. [Regalos actuales](#-regalos-actuales)
+5. [Usar tus propias imágenes](#-usar-tus-propias-imágenes)
+6. [Ilustraciones disponibles](#-ilustraciones-disponibles)
+7. [Fechas y desbloqueo](#-fechas-y-desbloqueo)
+8. [Personalizar los sobres](#-personalizar-los-sobres)
+9. [Estructura del proyecto](#-estructura-del-proyecto)
+10. [Publicar en GitHub Pages](#-publicar-en-github-pages)
+11. [Preguntas frecuentes](#-preguntas-frecuentes)
 
 ---
 
@@ -35,9 +36,39 @@ Abre **http://localhost:8000/?preview**.
 
 ---
 
-## ✏️ Zona de regalos: cambiar los objetos
+## 🎁 Cambiar los premios desde el panel (sin tocar código)
 
-> **Solo hay que tocar un archivo: [`assets/js/gifts.js`](assets/js/gifts.js)**
+Abre **⚙ Panel de admin**, desde el pie de página o con `?admin` (PIN por defecto `2412`), y entra en la pestaña **🎁 Premios**.
+
+1. **Elige un sobre** en la lista de la izquierda. Cada uno muestra su número, su fecha y el premio actual.
+2. **📦 Elegir del catálogo**: abre el catálogo de objetos, con buscador y categorías (Dulces, Hogar, Ropa, Música y ocio, Experiencias, Clásicos). Un clic carga el objeto en el sobre. Los objetos que ya están en algún sobre aparecen marcados con "En sobre 03".
+3. **Retoca lo que quieras**: carta o entrada, nombre, ilustración, rareza, efecto, poder, descripción, frase, y para las entradas fecha, hora, lugar y asiento. La **vista previa** se actualiza mientras escribes.
+4. **📷 Subir imagen**: usa una foto o un PNG tuyo en lugar de la ilustración. Se reduce a 600 px y se guarda dentro del premio.
+5. **Guardar premio**. El cambio se aplica al calendario al instante y se apunta en el historial.
+
+### 🕘 Historial
+
+La pestaña **🕘 Historial** guarda los últimos 30 cambios con fecha y hora, por ejemplo *"Sobre 05: «Bastón Dulce» → «Noche de Cine»"*. Con **↩ Volver a antes** se recupera el estado previo a ese cambio. La propia restauración también queda apuntada, así que se puede deshacer.
+
+### 📤 Publicar los cambios para todo el mundo
+
+Lo que editas en el panel se guarda **en ese navegador**. Para que lo vea Álvaro en su móvil:
+
+1. Pulsa **⬇ Descargar gifts.js** en la pestaña Premios. El archivo incluye los premios y el reparto de días actuales.
+2. Sustituye `assets/js/gifts.js` del proyecto por el descargado.
+3. Publica (haz commit y push si usas GitHub Pages).
+
+**"Restablecer todos los premios de gifts.js"** descarta lo editado en ese navegador. También queda en el historial.
+
+### 📦 Añadir objetos al catálogo
+
+El catálogo está en [`assets/js/catalog.js`](assets/js/catalog.js). Copia cualquier bloque, cambia los textos y la categoría (`cat`), y aparecerá en el panel.
+
+---
+
+## ✏️ Zona de regalos: cambiar los objetos a mano
+
+> **Si prefieres editar el código, solo hay que tocar un archivo: [`assets/js/gifts.js`](assets/js/gifts.js)**
 
 Cada día es un bloque como este:
 
@@ -149,7 +180,10 @@ Todas son vectoriales, originales y animadas.
 | `star` | Estrella | `music` | Notas musicales |
 | `gift` | Regalo | `film` | Claqueta de cine |
 | `tree` | Árbol | `crown` | Corona |
-| `snowflake` | Copo de nieve | | |
+| `snowflake` | Copo de nieve | `socks` | Calcetines |
+| `book` | Libro | `gamepad` | Mando de consola |
+| `headphones` | Auriculares | `dinner` | Cena (campana de servir) |
+| `plane` | Viaje en avión | | |
 
 ---
 
@@ -213,7 +247,9 @@ El nombre del logo sale de `owner` en `gifts.js`.
 index.html            Página
 assets/
   css/styles.css      Estilos: sobres, cartas, entradas, fundas, animaciones
-  js/gifts.js         ✏️ ZONA DE REGALOS (lo único que hay que editar)
+  js/gifts.js         ✏️ ZONA DE REGALOS (premios publicados para todo el mundo)
+  js/catalog.js       📦 Catálogo de objetos para el panel de admin
+  js/admin-gifts.js   Panel de admin: editor de premios, catálogo e historial
   js/art.js           Ilustraciones SVG y diseños de sobre
   js/app.js           Lógica: tablero, apertura, efectos, sonido y descarga
   img/                Tus imágenes

@@ -19,7 +19,7 @@
   const KEY = 'adviento-alvaro-' + CFG.year;
   const store = {
     get(k, d) { try { const v = localStorage.getItem(KEY + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
-    set(k, v) { try { localStorage.setItem(KEY + k, JSON.stringify(v)); } catch (e) { /* sin almacenamiento */ } },
+    set(k, v) { try { localStorage.setItem(KEY + k, JSON.stringify(v)); return true; } catch (e) { return false; } },
   };
   let opened = new Set(store.get(':opened', []));
   const saveOpened = () => store.set(':opened', [...opened]);
@@ -62,7 +62,10 @@
   const isUnlocked = (day) => PREVIEW || Date.now() >= dayDate(day).getTime();
   const isToday = (day) => { const d = dayDate(day), n = new Date(); return d.toDateString() === n.toDateString(); };
 
-  const gifts = CFG.gifts.slice().sort((a, b) => a.day - b.day);
+  // Premios: los editados en el panel de admin (este navegador) mandan sobre gifts.js
+  const sortGifts = (arr) => arr.slice().sort((a, b) => a.day - b.day);
+  const savedGifts = store.get(':gifts', null);
+  let gifts = sortGifts(Array.isArray(savedGifts) && savedGifts.length === CFG.gifts.length ? savedGifts : CFG.gifts);
   const giftByDay = (d) => gifts.find((g) => g.day === d);
 
   /* ---------- utilidades visuales ---------- */
@@ -942,6 +945,7 @@
   const WEEK = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
   const WEEKDAY = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
   let draft = null;
+  const adminHooks = [];
 
   const adminUnlocked = () => {
     if (!CFG.adminPin) return true;
@@ -954,7 +958,7 @@
     const ok = adminUnlocked();
     admLock.hidden = ok; admBody.hidden = !ok;
     $('#adminErr').textContent = '';
-    if (ok) paintAdmin(); else setTimeout(() => $('#adminPin').focus(), 60);
+    if (ok) { paintAdmin(); adminHooks.forEach((f) => f()); } else setTimeout(() => $('#adminPin').focus(), 60);
   }
   function closeAdmin() {
     admin.hidden = true;
@@ -1042,7 +1046,7 @@
     if (String(input.value).trim() === String(CFG.adminPin)) {
       try { sessionStorage.setItem(KEY + ':admin', '1'); } catch (err) { /* noop */ }
       input.value = '';
-      admLock.hidden = true; admBody.hidden = false; paintAdmin();
+      admLock.hidden = true; admBody.hidden = false; paintAdmin(); adminHooks.forEach((f) => f());
     } else {
       $('#adminErr').textContent = 'PIN incorrecto';
       sfx.deny();
@@ -1077,6 +1081,25 @@
   });
   $('#adminBtn').addEventListener('click', openAdmin);
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !admin.hidden) closeAdmin(); });
+
+  /* ---------- API interna para el editor de premios (admin-gifts.js) ---------- */
+  window.ADV_APP = {
+    CFG, THEMES, store, art, esc, pad, toast, RAR_NAME, cardHTML, dayDate, calDay, fmtDate,
+    getGifts: () => gifts,
+    getSchedule: () => SCHED,
+    isOpened: (d) => opened.has(d),
+    /** Guarda los premios en este navegador. Devuelve false si no cabe (imágenes muy grandes). */
+    setGifts(arr) {
+      const next = sortGifts(arr);
+      if (!store.set(':gifts', next)) return false;
+      gifts = next; render(); if (draft) paintAdmin();
+      return true;
+    },
+    resetGifts() { store.set(":gifts", null); gifts = sortGifts(CFG.gifts); render(); if (draft) paintAdmin(); },
+    hasLocalGifts: () => Array.isArray(store.get(':gifts', null)),
+    onAdminOpen: (f) => adminHooks.push(f),
+    closeAdmin: () => closeAdmin(),
+  };
 
   /* ---------- inicio ---------- */
   $('#yearLabel').textContent = CFG.year;

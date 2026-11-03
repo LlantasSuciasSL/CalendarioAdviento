@@ -446,6 +446,111 @@
       <g class="twinkle d2"><polygon points="${starPts(184, 168, 9, 3, 4)}" fill="#ff9ec4"/></g>`;
     },
 
+    /* ---------- Catálogo extra ---------- */
+    socks(u) {
+      const sock = 'M70 28 H122 V108 Q122 118 130 126 L152 148 Q166 164 150 176 Q136 188 120 174 L82 138 Q70 126 70 110Z';
+      return `
+      <defs><clipPath id="${u}c"><path d="${sock}"/></clipPath></defs>
+      <g class="swing" style="transform-origin:96px 20px">
+        <path d="M60 22 Q96 8 132 22" fill="none" stroke="#8b5a2b" stroke-width="4"/>
+        <path d="${sock}" fill="#e63946"/>
+        <g clip-path="url(#${u}c)">
+          <rect x="60" y="62" width="80" height="12" fill="#26b763"/><rect x="60" y="86" width="80" height="12" fill="#26b763"/>
+          <path d="M112 160 Q130 150 160 156 L160 200 L100 200Z" fill="#fff6ee"/>
+          <path d="M60 116 Q80 118 92 140 L60 150Z" fill="#fff6ee"/>
+          <polygon points="${starPts(98, 80, 7, 3, 6)}" fill="#fff"/>
+        </g>
+        <path d="${sock}" fill="none" stroke="#5b0d1a" stroke-width="6" stroke-linejoin="round"/>
+        <rect x="64" y="22" width="64" height="24" rx="7" fill="#fff6ee" stroke="#5b0d1a" stroke-width="5"/>
+        <path d="M72 34 h48" stroke="#e3d6c8" stroke-width="3" stroke-dasharray="4 4"/>
+      </g>
+      <g class="twinkle"><polygon points="${starPts(160, 50, 11, 4, 4)}" fill="#fff"/></g>`;
+    },
+
+    book(u) {
+      return `
+      <defs><linearGradient id="${u}p" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#efe3cc"/></linearGradient></defs>
+      <g class="bounce">
+        <path d="M100 62 C76 48 44 46 18 54 V170 C44 162 76 164 100 178 C124 164 156 162 182 170 V54 C156 46 124 48 100 62Z" fill="#c1121f" stroke="#4a0710" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M100 58 C80 46 52 44 28 50 V158 C52 152 80 154 100 166Z" fill="url(#${u}p)" stroke="#6b3a1e" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M100 58 C120 46 148 44 172 50 V158 C148 152 120 154 100 166Z" fill="url(#${u}p)" stroke="#6b3a1e" stroke-width="4" stroke-linejoin="round"/>
+        <g stroke="#b9a88c" stroke-width="3" stroke-linecap="round">
+          <path d="M40 74 Q64 70 88 76 M40 90 Q64 86 88 92 M40 106 Q64 102 88 108 M40 122 Q60 118 76 122"/>
+          <path d="M112 76 Q136 70 160 74 M112 92 Q136 86 160 90 M112 108 Q136 102 160 106 M124 122 Q140 118 160 122"/>
+        </g>
+        <path d="M140 46 V100 L132 92 L124 100 V48" fill="#ffd23f" stroke="#8a5a00" stroke-width="3" stroke-linejoin="round"/>
+      </g>
+      <g class="twinkle"><polygon points="${starPts(30, 30, 11, 4, 4)}" fill="#fff"/></g>
+      <g class="twinkle d2"><polygon points="${starPts(176, 26, 9, 3, 4)}" fill="#ffd23f"/></g>`;
+    },
+
+    gamepad(u) {
+      return `
+      <defs><linearGradient id="${u}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f6bff"/><stop offset="1" stop-color="#3b1d9e"/></linearGradient></defs>
+      <g class="wiggle">
+        <path d="M60 64 H140 C172 64 188 98 188 128 C188 158 170 172 154 162 L132 140 H68 L46 162 C30 172 12 158 12 128 C12 98 28 64 60 64Z" fill="url(#${u}g)" stroke="#170a4a" stroke-width="6" stroke-linejoin="round"/>
+        <path d="M40 84 Q60 74 80 76" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".45"/>
+        <g fill="#1b1040"><rect x="48" y="90" width="14" height="40" rx="4"/><rect x="35" y="103" width="40" height="14" rx="4"/></g>
+        <g stroke="#170a4a" stroke-width="3">
+          <circle cx="142" cy="92" r="9" fill="#ffd23f"/><circle cx="160" cy="110" r="9" fill="#e63946"/>
+          <circle cx="124" cy="110" r="9" fill="#26b763"/><circle cx="142" cy="128" r="9" fill="#4cc9f0"/>
+        </g>
+        <rect x="84" y="96" width="12" height="6" rx="3" fill="#c9b8ff"/><rect x="104" y="96" width="12" height="6" rx="3" fill="#c9b8ff"/>
+        <circle cx="100" cy="124" r="8" fill="#ff5ce1" stroke="#170a4a" stroke-width="3"/>
+      </g>
+      <g class="twinkle"><polygon points="${starPts(170, 40, 11, 4, 4)}" fill="#fff"/></g>`;
+    },
+
+    headphones(u) {
+      return `
+      <defs><linearGradient id="${u}h" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7eb6"/><stop offset="1" stop-color="#c2185b"/></linearGradient></defs>
+      <g class="bounce">
+        <path d="M40 124 V104 A60 60 0 0 1 160 104 V124" fill="none" stroke="#3a0a24" stroke-width="20" stroke-linecap="round"/>
+        <path d="M40 124 V104 A60 60 0 0 1 160 104 V124" fill="none" stroke="url(#${u}h)" stroke-width="11" stroke-linecap="round"/>
+        <rect x="22" y="108" width="40" height="62" rx="16" fill="url(#${u}h)" stroke="#3a0a24" stroke-width="6"/>
+        <rect x="138" y="108" width="40" height="62" rx="16" fill="url(#${u}h)" stroke="#3a0a24" stroke-width="6"/>
+        <rect x="50" y="116" width="14" height="46" rx="7" fill="#2b2b3a"/><rect x="136" y="116" width="14" height="46" rx="7" fill="#2b2b3a"/>
+        <path d="M32 120 v34" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+      </g>
+      <g class="twinkle" fill="#fff" stroke="#3a0a24" stroke-width="2.5">
+        <path d="M92 70 v-26 l18 -5 v24"/><ellipse cx="88" cy="72" rx="7" ry="5"/><ellipse cx="106" cy="66" rx="7" ry="5"/>
+      </g>`;
+    },
+
+    dinner(u) {
+      return `
+      <defs><linearGradient id="${u}d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#cfd8e6"/><stop offset="1" stop-color="#7f8ca3"/></linearGradient></defs>
+      <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85">
+        <path class="steam" d="M80 46 C72 36 88 28 80 16"/><path class="steam d2" d="M100 42 C92 32 108 24 100 10"/><path class="steam d3" d="M120 46 C112 36 128 28 120 16"/>
+      </g>
+      <ellipse cx="100" cy="156" rx="84" ry="16" fill="#e9eef5" stroke="#3b4660" stroke-width="5"/>
+      <path d="M28 150 A72 72 0 0 1 172 150Z" fill="url(#${u}d)" stroke="#3b4660" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M50 128 A52 52 0 0 1 84 88" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+      <rect x="92" y="66" width="16" height="12" rx="4" fill="#cfd8e6" stroke="#3b4660" stroke-width="4"/>
+      <circle cx="100" cy="62" r="8" fill="#ffd23f" stroke="#8a5a00" stroke-width="4"/>
+      <path d="M22 182 h156" stroke="#e63946" stroke-width="6" stroke-linecap="round"/>
+      <g class="twinkle"><polygon points="${starPts(160, 40, 11, 4, 4)}" fill="#ffd23f"/></g>`;
+    },
+
+    plane() {
+      return `
+      <g fill="#fff" stroke="#1d3557" stroke-width="4">
+        <g class="twinkle d2"><circle cx="40" cy="160" r="14"/><circle cx="58" cy="152" r="18"/><circle cx="78" cy="162" r="13"/></g>
+        <rect x="30" y="160" width="56" height="14" rx="7" stroke="none"/>
+      </g>
+      <path d="M20 132 Q60 120 84 104" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="6 8" stroke-linecap="round" opacity=".8"/>
+      <g class="bounce"><g transform="rotate(-20 110 96)">
+        <path d="M100 96 L72 148 H94 L134 96Z" fill="#4cc9f0" stroke="#1d3557" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M100 96 L76 50 H96 L134 96Z" fill="#3aa6d0" stroke="#1d3557" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M54 88 L44 60 H58 L76 88Z" fill="#e63946" stroke="#1d3557" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M44 96 Q44 84 60 84 H158 Q184 84 192 96 Q184 108 158 108 H60 Q44 108 44 96Z" fill="#ffffff" stroke="#1d3557" stroke-width="5"/>
+        <path d="M168 86 Q184 88 190 96 H168Z" fill="#1d3557"/>
+        <g fill="#4cc9f0" stroke="#1d3557" stroke-width="2"><circle cx="80" cy="95" r="4.5"/><circle cx="98" cy="95" r="4.5"/><circle cx="116" cy="95" r="4.5"/><circle cx="134" cy="95" r="4.5"/><circle cx="152" cy="95" r="4.5"/></g>
+        <path d="M60 104 H160" stroke="#e63946" stroke-width="3"/>
+      </g></g>
+      <g class="twinkle"><polygon points="${starPts(170, 30, 11, 4, 4)}" fill="#fff"/></g>`;
+    },
+
     /* Icono pequeño para la "energía" de la carta */
     spark() {
       return `<polygon points="${starPts(100, 100, 80, 22, 4)}" fill="#fff"/>`;

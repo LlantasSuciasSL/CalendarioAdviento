@@ -82,8 +82,8 @@
     <div class="admin__panel">
       <header class="admin__head">
         <div>
-          <span class="admin__kicker">⚙ Panel de admin</span>
-          <h2 id="adminTitle">Reparto de los 12 sobres</h2>
+          <span class="admin__kicker">⚙ Zona del organizador</span>
+          <h2 id="adminTitle">Panel de admin</h2>
         </div>
         <button class="icon-btn" data-close aria-label="Cerrar">
           <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
@@ -99,6 +99,13 @@
       </form>
 
       <div class="admin__body" id="adminBody" hidden>
+        <nav class="admin__tabs" role="tablist" aria-label="Secciones del panel">
+          <button type="button" role="tab" data-tab="dias" aria-selected="true">📅 Días</button>
+          <button type="button" role="tab" data-tab="premios" aria-selected="false">🎁 Premios</button>
+          <button type="button" role="tab" data-tab="historial" aria-selected="false">🕘 Historial <span class="admin__badge" id="histCount"></span></button>
+        </nav>
+
+        <section class="admin__tab" data-tab="dias">
         <fieldset class="seg">
           <legend>¿Qué días de diciembre hay sobre?</legend>
           <label class="seg__opt">
@@ -143,6 +150,65 @@
           <button class="btn btn--ghost" id="admCode" type="button">{ } Copiar código</button>
           <button class="link-btn" id="admReset" type="button">Volver a lo que diga gifts.js</button>
         </div>
+        </section>
+
+        <!-- 🎁 PREMIOS -->
+        <section class="admin__tab" data-tab="premios" hidden>
+          <div class="pz">
+            <div class="pz__col pz__col--list">
+              <h3 class="admin__h3">Sobres</h3>
+              <ol class="pz__list" id="pzList"></ol>
+            </div>
+            <div class="pz__col pz__col--preview">
+              <h3 class="admin__h3">Vista previa</h3>
+              <div class="pz__preview" id="pzPreview"></div>
+              <button class="btn btn--ghost pz__catbtn" id="pzOpenCat" type="button">📦 Elegir del catálogo</button>
+            </div>
+            <form class="pz__col pz__form" id="pzForm" autocomplete="off"></form>
+          </div>
+
+          <div class="pz__bar">
+            <span class="pz__status" id="pzStatus"></span>
+            <button class="btn btn--ghost" id="pzDiscard" type="button">Descartar</button>
+            <button class="btn" id="pzSave" type="button">Guardar premio</button>
+          </div>
+
+          <p class="admin__note">
+            Los premios se guardan en <u>este navegador</u> y cada cambio queda en el <b>🕘 Historial</b>.
+            Para publicarlos para todo el mundo, pulsa <b>⬇ Descargar gifts.js</b> y sustituye el archivo
+            <code>assets/js/gifts.js</code> del proyecto.
+          </p>
+          <div class="admin__actions">
+            <button class="btn btn--ghost" id="pzDownload" type="button">⬇ Descargar gifts.js</button>
+            <button class="link-btn" id="pzResetAll" type="button">Restablecer todos los premios de gifts.js</button>
+          </div>
+
+          <div class="cat" id="pzCatalog" hidden>
+            <div class="cat__head">
+              <div>
+                <span class="admin__kicker">📦 Catálogo de objetos</span>
+                <h3 class="cat__title">Elige un premio para el <span id="catFor"></span></h3>
+              </div>
+              <button class="icon-btn" id="catClose" type="button" aria-label="Cerrar catálogo">
+                <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+            <div class="cat__tools">
+              <input type="search" id="catSearch" placeholder="Buscar: jersey, cine, chocolate…" aria-label="Buscar en el catálogo" />
+              <div class="cat__chips" id="catChips"></div>
+            </div>
+            <div class="cat__grid" id="catGrid"></div>
+          </div>
+        </section>
+
+        <!-- 🕘 HISTORIAL -->
+        <section class="admin__tab" data-tab="historial" hidden>
+          <p class="admin__lead">Cada vez que guardas un premio se apunta aquí. Puedes volver al estado de <b>antes</b> de cualquier cambio.</p>
+          <ol class="hist" id="histList"></ol>
+          <div class="admin__actions">
+            <button class="link-btn" id="histClear" type="button">Borrar historial</button>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -151,7 +217,9 @@
 
   <script src="assets/vendor/html-to-image.min.js"></script>
   <script src="assets/js/gifts.js"></script>
+  <script src="assets/js/catalog.js"></script>
   <script src="assets/js/art.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/admin-gifts.js"></script>
 </body>
 </html>
