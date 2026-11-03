@@ -163,6 +163,8 @@ startDate: '2026-12-13', // fecha del DÍA 1
 
 El día N se desbloquea a las 00:00 de `startDate + (N-1)`. Con `13 dic`, el día 12 cae en Nochebuena (24 dic).
 
+**Días aún no disponibles → ❄ congelados.** El sobre aparece encerrado en un bloque de hielo, con escarcha, carámbanos y grietas, y lleva un candado helado con el mensaje **FREEZE**, la fecha en que se descongela y los días que faltan. Si lo pulsas antes de tiempo, el hielo tiembla, se agrieta, saltan esquirlas y suena un golpe helado. A medianoche se descongela solo, sin recargar la página.
+
 El progreso se guarda en el navegador (`localStorage`). El enlace **"Reiniciar sobres"** del pie de página vuelve a cerrarlos todos.
 
 ---

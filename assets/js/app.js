@@ -298,6 +298,11 @@
       notes.forEach((n, i) => this.tone(n * 2, 0.3 + i * 0.05, 0.6, 'sine', 0.05));
       this.noise(1.2, 'highpass', 6000, 9000, 0.06);
     },
+    freeze() {
+      this.noise(0.12, 'highpass', 5000, 9000, 0.25, 0.8);
+      [2637, 3520, 3136].forEach((f, i) => this.tone(f, 0.02 + i * 0.05, 0.35, 'sine', 0.07));
+      this.tone(880, 0, 0.18, 'triangle', 0.06);
+    },
     deny() { this.tone(220, 0, 0.12, 'square', 0.05); this.tone(180, 0.1, 0.16, 'square', 0.05); },
     click() { this.tone(1400, 0, 0.05, 'sine', 0.06); },
   };
@@ -424,6 +429,57 @@
     clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('is-on'), 2800);
   }
 
+  /* ---------- bloque de hielo para los días bloqueados ---------- */
+  function daysLeft(day) {
+    const ms = dayDate(day) - Date.now();
+    return Math.max(1, Math.ceil(ms / 86400000));
+  }
+  function iceHTML(day, date) {
+    const r = rng(day * 17);
+    let icicles = '', x = 2;
+    while (x < 98) {
+      const w = 3 + r() * 5, h = 5 + r() * 13;
+      icicles += `<path d="M${x.toFixed(1)} 0 L${(x + w / 2).toFixed(1)} ${h.toFixed(1)} L${(x + w).toFixed(1)} 0Z"/>`;
+      x += w + r() * 2.5;
+    }
+    const flakes = Array.from({ length: 6 }, (_, i) => `<i style="--x:${(8 + r() * 84).toFixed(0)}%;--y:${(10 + r() * 80).toFixed(0)}%;--d:${(r() * 3).toFixed(2)}s;--s:${(.6 + r() * .8).toFixed(2)}">❄</i>`).join('');
+    const shards = Array.from({ length: 10 }, (_, i) => `<i style="--a:${i * 36 + r() * 20}deg;--dist:${(40 + r() * 50).toFixed(0)}cqw"></i>`).join('');
+    const n = daysLeft(day);
+    return `
+      <div class="ice" aria-hidden="true">
+        <div class="ice__block"></div>
+        <div class="ice__frost"></div>
+        <svg class="ice__cracks" viewBox="0 0 100 168" preserveAspectRatio="none">
+          <path d="M0 ${20 + r() * 20} L18 ${44 + r() * 10} L12 ${70 + r() * 10} L30 ${86 + r() * 10}"/>
+          <path d="M100 ${110 + r() * 20} L82 ${120 + r() * 10} L88 ${140 + r() * 8} L70 ${160 + r() * 6}"/>
+          <path d="M18 ${48 + r() * 6} L34 ${40 + r() * 6}" />
+          <path d="M${60 + r() * 20} 0 L${70 + r() * 10} 14 L${64 + r() * 10} 26"/>
+        </svg>
+        <div class="ice__shine"></div>
+        <div class="ice__flakes">${flakes}</div>
+        <svg class="ice__icicles" viewBox="0 0 100 20">${icicles}</svg>
+        <div class="ice__shards">${shards}</div>
+        <div class="ice__seal">
+          <svg class="ice__padlock" viewBox="0 0 64 80">
+            <defs>
+              <linearGradient id="pl${day}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4fbff"/><stop offset=".45" stop-color="#a9d8f5"/><stop offset="1" stop-color="#4d8fc9"/></linearGradient>
+              <linearGradient id="ps${day}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7fb6e0"/><stop offset=".5" stop-color="#eaf7ff"/><stop offset="1" stop-color="#6aa3d4"/></linearGradient>
+            </defs>
+            <path d="M16 36 V24 a16 16 0 0 1 32 0 V36" fill="none" stroke="#123a6b" stroke-width="11" stroke-linecap="round"/>
+            <path d="M16 36 V24 a16 16 0 0 1 32 0 V36" fill="none" stroke="url(#ps${day})" stroke-width="6" stroke-linecap="round"/>
+            <rect x="6" y="34" width="52" height="40" rx="8" fill="url(#pl${day})" stroke="#123a6b" stroke-width="3.5"/>
+            <path d="M8 40 Q14 33 22 37 Q28 31 34 36 Q42 31 48 36 Q54 33 56 40 L56 44 Q50 42 46 45 Q40 41 34 45 Q28 41 22 45 Q14 42 8 45Z" fill="#fff"/>
+            <circle cx="32" cy="54" r="5" fill="#123a6b"/><path d="M30 56 h4 l1.5 9 h-7z" fill="#123a6b"/>
+            <path d="M14 74 l2.5 6 l2.5 -6z M38 74 l2 5 l2 -5z M48 74 l2.5 7 l2.5 -7z" fill="#dff3ff" stroke="#123a6b" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M12 48 v18" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+          </svg>
+          <span class="ice__freeze">Freeze</span>
+          <span class="ice__msg">Congelado hasta el <b>${date}</b></span>
+          <span class="ice__left">❄ ${n === 1 ? 'Falta 1 día' : `Faltan ${n} días`}</span>
+        </div>
+      </div>`;
+  }
+
   function render(newDay) {
     board.innerHTML = gifts.map((g, i) => {
       const t = THEMES[g.day] || THEMES[1];
@@ -432,13 +488,9 @@
       const today = isToday(g.day);
       const date = fmtDate(dayDate(g.day));
       const tag = isOpen ? `<span class="slot__tag">Gem MT 10</span>`
-        : !unlocked ? `<span class="slot__tag slot__tag--lock">${date}</span>`
+        : !unlocked ? `<span class="slot__tag slot__tag--lock">❄ ${date}</span>`
         : today ? `<span class="slot__tag">¡Hoy!</span>` : `<span class="slot__tag">Listo</span>`;
-      const lock = !unlocked ? `
-        <div class="lock"><div class="lock__chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
-          <b>${date}</b>Se abre ese día
-        </div></div>` : '';
+      const lock = !unlocked ? iceHTML(g.day, date) : '';
       return `
       <div class="slot ${unlocked ? '' : 'is-locked'} ${today && !isOpen ? 'is-today' : ''} ${isOpen ? 'is-open' : ''}" style="--i:${i};${themeVars(t)}" data-day="${g.day}">
         <button class="slot__btn" data-day="${g.day}" aria-label="Día ${g.day}${isOpen ? ', ver regalo' : unlocked ? ', abrir sobre' : ', bloqueado hasta el ' + date}">
@@ -471,9 +523,10 @@
     const day = Number(btn.dataset.day);
     const slot = btn.closest('.slot');
     if (!isUnlocked(day)) {
-      sfx.deny();
-      slot.classList.remove('shake'); void slot.offsetWidth; slot.classList.add('shake');
-      toast(`🔒 El sobre del día ${day} se abre el ${fmtDate(dayDate(day))}. ¡Paciencia!`);
+      sfx.freeze();
+      slot.classList.remove('shake', 'is-hit'); void slot.offsetWidth; slot.classList.add('shake', 'is-hit');
+      if (navigator.vibrate) try { navigator.vibrate([15, 40, 15]); } catch (_) { /* noop */ }
+      toast(`❄️ ¡Sigue congelado! El sobre del día ${day} se descongela el ${fmtDate(dayDate(day))}.`);
       return;
     }
     openStage(day, btn.querySelector('.pack, .slab'), opened.has(day));
