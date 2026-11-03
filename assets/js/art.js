@@ -551,6 +551,84 @@
       <g class="twinkle"><polygon points="${starPts(170, 30, 11, 4, 4)}" fill="#fff"/></g>`;
     },
 
+    /* Cena para dos: dos personas brindando en una mesa navideña */
+    dinner2(u) {
+      return `
+      <defs>
+        <linearGradient id="${u}t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e63946"/><stop offset="1" stop-color="#a3101a"/></linearGradient>
+        <radialGradient id="${u}f" cx=".5" cy=".7" r=".7"><stop offset="0" stop-color="#fffbe0"/><stop offset=".45" stop-color="#ffc300"/><stop offset="1" stop-color="#fb5607"/></radialGradient>
+        <radialGradient id="${u}h" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd166" stop-opacity=".55"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle class="glow-pulse" cx="100" cy="112" r="46" fill="url(#${u}h)"/>
+
+      <!-- corazón -->
+      <g class="bounce" style="transform-origin:100px 40px">
+        <path d="M100 46 C92 38 78 38 78 26 C78 18 86 14 92 16 C96 17 99 20 100 23 C101 20 104 17 108 16 C114 14 122 18 122 26 C122 38 108 38 100 46Z" fill="#ff4d7e" stroke="#7a0f2c" stroke-width="3.5" stroke-linejoin="round"/>
+        <ellipse cx="88" cy="24" rx="4" ry="2.6" fill="#fff" opacity=".7" transform="rotate(-30 88 24)"/>
+      </g>
+
+      <!-- persona izquierda (gorro navideño) -->
+      <g class="wiggle" style="transform-origin:48px 150px">
+        <path d="M16 150 Q16 106 48 102 Q80 106 80 150Z" fill="#26b763" stroke="#0b3d1f" stroke-width="4.5" stroke-linejoin="round"/>
+        <path d="M30 120 h36 M26 132 h44" stroke="#fff" stroke-width="3.5" stroke-dasharray="4 4" opacity=".85"/>
+        <rect x="42" y="92" width="12" height="12" rx="3" fill="#f2b98f"/>
+        <circle cx="48" cy="78" r="19" fill="#f6c9a2" stroke="#7a4a2a" stroke-width="4"/>
+        <path d="M30 74 Q32 58 48 58 Q64 58 66 72 Q56 66 48 68 Q38 66 30 74Z" fill="#5a3418"/>
+        <path d="M28 66 Q40 36 74 42 L66 64 Q48 56 28 66Z" fill="#e63946" stroke="#5b0d1a" stroke-width="3.5" stroke-linejoin="round"/>
+        <circle cx="76" cy="40" r="6" fill="#fff" stroke="#c9d3e0" stroke-width="2"/>
+        <path d="M26 66 Q48 56 68 64" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="42" cy="79" r="2.6" fill="#2b1406"/><circle cx="55" cy="79" r="2.6" fill="#2b1406"/>
+        <path d="M43 87 Q48.5 91 54 87" fill="none" stroke="#2b1406" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="38" cy="85" r="3" fill="#ff8fa3" opacity=".7"/><circle cx="59" cy="85" r="3" fill="#ff8fa3" opacity=".7"/>
+        <path d="M70 116 Q82 104 90 86" fill="none" stroke="#0b3d1f" stroke-width="11" stroke-linecap="round"/>
+        <path d="M70 116 Q82 104 90 86" fill="none" stroke="#26b763" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="90" cy="86" r="5" fill="#f6c9a2" stroke="#7a4a2a" stroke-width="2.5"/>
+      </g>
+
+      <!-- persona derecha (pelo largo con acebo) -->
+      <g class="wiggle" style="transform-origin:152px 150px;animation-delay:-1.7s">
+        <path d="M120 150 Q120 106 152 102 Q184 106 184 150Z" fill="#7b2cbf" stroke="#2d0a52" stroke-width="4.5" stroke-linejoin="round"/>
+        <path d="M134 118 l6 6 l6 -6 l6 6 l6 -6 l6 6" fill="none" stroke="#ffd23f" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M131 64 Q128 98 134 112 L170 112 Q176 98 173 64Z" fill="#a0521d"/>
+        <rect x="146" y="92" width="12" height="12" rx="3" fill="#e0a77a"/>
+        <circle cx="152" cy="78" r="19" fill="#eab98e" stroke="#7a4a2a" stroke-width="4"/>
+        <path d="M132 78 Q130 56 152 56 Q174 56 172 78 Q166 66 154 64 Q146 70 132 78Z" fill="#b5651d" stroke="#6b3410" stroke-width="2.5" stroke-linejoin="round"/>
+        ${holly(166, 60, 0.42)}
+        <circle cx="146" cy="79" r="2.6" fill="#2b1406"/><circle cx="159" cy="79" r="2.6" fill="#2b1406"/>
+        <path d="M147 87 Q152.5 91 158 87" fill="none" stroke="#2b1406" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="142" cy="85" r="3" fill="#ff8fa3" opacity=".7"/><circle cx="163" cy="85" r="3" fill="#ff8fa3" opacity=".7"/>
+        <path d="M130 116 Q118 104 110 86" fill="none" stroke="#2d0a52" stroke-width="11" stroke-linecap="round"/>
+        <path d="M130 116 Q118 104 110 86" fill="none" stroke="#7b2cbf" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="110" cy="86" r="5" fill="#eab98e" stroke="#7a4a2a" stroke-width="2.5"/>
+      </g>
+
+      <!-- copas brindando -->
+      <g stroke="#5b2a4a" stroke-width="2.5" stroke-linejoin="round">
+        <g transform="rotate(14 92 76)">
+          <path d="M84 62 H100 Q100 78 92 80 Q84 78 84 62Z" fill="#fff" fill-opacity=".55"/>
+          <path d="M85.5 68 H98.5 Q97 78 92 79 Q87 78 85.5 68Z" fill="#c1123f" stroke="none"/>
+          <path d="M92 80 V90 M87 90 H97" fill="none"/>
+        </g>
+        <g transform="rotate(-14 108 76)">
+          <path d="M100 62 H116 Q116 78 108 80 Q100 78 100 62Z" fill="#fff" fill-opacity=".55"/>
+          <path d="M101.5 68 H114.5 Q113 78 108 79 Q103 78 101.5 68Z" fill="#c1123f" stroke="none"/>
+          <path d="M108 80 V90 M103 90 H113" fill="none"/>
+        </g>
+      </g>
+      <g class="twinkle"><polygon points="${starPts(100, 56, 9, 3, 4)}" fill="#fff"/></g>
+
+      <!-- mesa -->
+      <rect x="12" y="134" width="176" height="12" rx="4" fill="#fff6ee" stroke="#5b0d1a" stroke-width="4"/>
+      <path d="M18 146 H182 L174 190 H26Z" fill="url(#${u}t)" stroke="#5b0d1a" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M18 146 Q30 156 42 146 Q54 156 66 146 Q78 156 90 146 Q102 156 114 146 Q126 156 138 146 Q150 156 162 146 Q174 156 182 146" fill="#fff6ee" stroke="#5b0d1a" stroke-width="2.5"/>
+      <ellipse cx="54" cy="134" rx="20" ry="5" fill="#fff" stroke="#9aa3b5" stroke-width="2.5"/>
+      <ellipse cx="146" cy="134" rx="20" ry="5" fill="#fff" stroke="#9aa3b5" stroke-width="2.5"/>
+      <path d="M48 131 q6 -6 12 0" fill="#c98a4b"/><path d="M140 131 q6 -6 12 0" fill="#26b763"/>
+      <rect x="94" y="112" width="12" height="22" rx="3" fill="#fff6ee" stroke="#5b0d1a" stroke-width="3"/>
+      <path class="flame" d="M100 96 C107 104 106 110 100 112 C94 110 93 104 100 96Z" fill="url(#${u}f)" stroke="#e85d04" stroke-width="1.8"/>
+      ${holly(100, 136, 0.55)}`;
+    },
+
     /* Icono pequeño para la "energía" de la carta */
     spark() {
       return `<polygon points="${starPts(100, 100, 80, 22, 4)}" fill="#fff"/>`;

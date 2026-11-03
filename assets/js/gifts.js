@@ -22,7 +22,8 @@
      ticket      solo entradas: { date, time, place, seat }
 
    ILUSTRACIONES DISPONIBLES (art)
-     chococal  candles  sweater  paint  pajama  market  vinyl
+     chococal  candles  sweater  paint  pajama  market  vinyl  dinner2
+     socks  book  gamepad  headphones  dinner  plane
      star  gift  tree  snowflake  bell  candy  ornament  mug
      gingerbread  candle  snowman  music  film  crown
 
@@ -78,22 +79,20 @@ window.ADVIENTO = {
       flavor: 'Hecho a mano, hecho con cariño.',
     },
 
-    // ───────────────────────── DÍA 5 ─────────────────────────  ⏳ PENDIENTE
+    // ───────────────────────── DÍA 5 ─────────────────────────
     {
-      day: 5, type: 'card', rarity: 'comun',
-      name: 'Bastón Dulce', art: 'candy',
-      effect: 'Golpe de Azúcar', power: '30',
-      description: 'Regalo sorpresa por desvelar. Este espacio está reservado para algo muy especial.',
-      flavor: 'Rayas rojas, energía blanca.',
+      day: 5, type: 'card', rarity: 'holo',
+      name: 'Cena para Dos', art: 'dinner2',
+      effect: '¡Brindis!', power: '2×',
+      description: 'Una cena especial para dos: velas, buena comida y un brindis navideño. Postre obligatorio.',
     },
 
     // ───────────────────────── DÍA 6 ─────────────────────────
     {
-      day: 6, type: 'ticket', rarity: 'holo',
-      name: 'Mercado Navideño', art: 'market',
-      effect: 'Paseo Mágico',
-      description: 'Una tarde entre luces, puestos, chocolate caliente y castañas.',
-      ticket: { date: 'Diciembre', time: '18:00', place: 'Mercado navideño', seat: 'Paseo libre · 2 pers.' },
+      day: 6, type: 'card', rarity: 'holo',
+      name: 'Mercado de Navidad', art: 'market',
+      effect: 'Paseo de Luces', power: '80',
+      description: 'Una tarde por el mercado de Navidad: luces, puestos, chocolate caliente y castañas. Para dos.',
     },
 
     // ───────────────────────── DÍA 7 ─────────────────────────

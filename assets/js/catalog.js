@@ -47,6 +47,12 @@ window.ADV_CATALOG = [
   { cat: 'Música y ocio', type: 'card', rarity: 'rara', name: 'Auriculares', art: 'headphones', effect: 'Modo Concierto', power: '70',
     description: 'Tu música favorita, sin interrupciones. Aísla de villancicos no deseados.', flavor: 'Volumen recomendado: alto.' },
 
+  /* ───────── Planes (cartas) ───────── */
+  { cat: 'Planes', type: 'card', rarity: 'holo', name: 'Mercado de Navidad', art: 'market', effect: 'Paseo de Luces', power: '80',
+    description: 'Una tarde por el mercado de Navidad: luces, puestos, chocolate caliente y castañas. Para dos.' },
+  { cat: 'Planes', type: 'card', rarity: 'holo', name: 'Cena para Dos', art: 'dinner2', effect: '¡Brindis!', power: '2×',
+    description: 'Una cena especial para dos: velas, buena comida y un brindis navideño. Postre obligatorio.' },
+
   /* ───────── Experiencias (entradas) ───────── */
   { cat: 'Experiencias', type: 'ticket', rarity: 'holo', name: 'Mercado Navideño', art: 'market', effect: 'Paseo Mágico',
     description: 'Una tarde entre luces, puestos, chocolate caliente y castañas.',
@@ -57,7 +63,7 @@ window.ADV_CATALOG = [
   { cat: 'Experiencias', type: 'ticket', rarity: 'holo', name: 'Noche de Cine', art: 'film', effect: 'Butaca VIP',
     description: 'Película, palomitas gigantes y cero spoilers.',
     ticket: { date: 'Por elegir', time: '20:30', place: 'Cine', seat: 'Fila central' } },
-  { cat: 'Experiencias', type: 'ticket', rarity: 'holo', name: 'Cena Especial', art: 'dinner', effect: 'Menú Sorpresa',
+  { cat: 'Experiencias', type: 'ticket', rarity: 'holo', name: 'Cena Especial', art: 'dinner2', effect: 'Menú Sorpresa',
     description: 'Una cena para dos en un sitio especial. Postre obligatorio.',
     ticket: { date: 'Por reservar', time: '21:30', place: 'Restaurante sorpresa', seat: 'Mesa para 2' } },
   { cat: 'Experiencias', type: 'ticket', rarity: 'secreta', name: 'Escapada Sorpresa', art: 'plane', effect: 'Destino Secreto',

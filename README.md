@@ -41,7 +41,7 @@ Abre **http://localhost:8000/?preview**.
 Abre **⚙ Panel de admin**, desde el pie de página o con `?admin` (PIN por defecto `2412`), y entra en la pestaña **🎁 Premios**.
 
 1. **Elige un sobre** en la lista de la izquierda. Cada uno muestra su número, su fecha y el premio actual.
-2. **📦 Elegir del catálogo**: abre el catálogo de objetos, con buscador y categorías (Dulces, Hogar, Ropa, Música y ocio, Experiencias, Clásicos). Un clic carga el objeto en el sobre. Los objetos que ya están en algún sobre aparecen marcados con "En sobre 03".
+2. **📦 Elegir del catálogo**: abre el catálogo de objetos, con buscador y categorías (Dulces, Hogar, Ropa, Música y ocio, Planes, Experiencias, Clásicos). Un clic carga el objeto en el sobre. Los objetos que ya están en algún sobre aparecen marcados con "En sobre 03".
 3. **Retoca lo que quieras**: carta o entrada, nombre, ilustración, rareza, efecto, poder, descripción, frase, y para las entradas fecha, hora, lugar y asiento. La **vista previa** se actualiza mientras escribes.
 4. **📷 Subir imagen**: usa una foto o un PNG tuyo en lugar de la ilustración. Se reduce a 600 px y se guarda dentro del premio.
 5. **Guardar premio**. El cambio se aplica al calendario al instante y se apunta en el historial.
@@ -140,8 +140,8 @@ Cada día es un bloque como este:
 | 2 | Velas navideñas | Carta | Común | `candles` | ✅ |
 | 3 | Jersey feo de Navidad | Carta | Holo | `sweater` | ✅ |
 | 4 | DIY de pintura navideña | Carta | Rara | `paint` | ✅ |
-| 5 | — | Carta | Común | `candy` | ⏳ Pendiente |
-| 6 | Mercado navideño | Entrada | Holo | `market` | ✅ |
+| 5 | Cena para dos | Carta | Holo | `dinner2` | ✅ |
+| 6 | Mercado de Navidad | Carta | Holo | `market` | ✅ |
 | 7 | Pijama de Navidad | Carta | Rara | `pajama` | ✅ |
 | 8 | — | Carta | Común | `bell` | ⏳ Pendiente |
 | 9 | — | Carta | Común | `tree` | ⏳ Pendiente |
@@ -183,7 +183,7 @@ Todas son vectoriales, originales y animadas.
 | `snowflake` | Copo de nieve | `socks` | Calcetines |
 | `book` | Libro | `gamepad` | Mando de consola |
 | `headphones` | Auriculares | `dinner` | Cena (campana de servir) |
-| `plane` | Viaje en avión | | |
+| `plane` | Viaje en avión | `dinner2` | Cena para dos (dos personas brindando) |
 
 ---
 

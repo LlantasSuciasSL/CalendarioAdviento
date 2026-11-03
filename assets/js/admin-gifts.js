@@ -15,7 +15,7 @@
     ['chococal', 'Calendario de chocolate'], ['candles', 'Trío de velas'], ['sweater', 'Jersey feo'],
     ['paint', 'Paleta y pincel'], ['pajama', 'Pijama'], ['socks', 'Calcetines'], ['market', 'Mercado navideño'],
     ['vinyl', 'Vinilo'], ['book', 'Libro'], ['gamepad', 'Mando de consola'], ['headphones', 'Auriculares'],
-    ['dinner', 'Cena'], ['plane', 'Viaje en avión'], ['music', 'Notas musicales'], ['film', 'Claqueta de cine'],
+    ['dinner2', 'Cena para dos (2 personas)'], ['dinner', 'Cena (campana de servir)'], ['plane', 'Viaje en avión'], ['music', 'Notas musicales'], ['film', 'Claqueta de cine'],
     ['crown', 'Corona'], ['star', 'Estrella'], ['gift', 'Regalo'], ['tree', 'Árbol'], ['snowflake', 'Copo de nieve'],
     ['bell', 'Campana'], ['candy', 'Bastón de caramelo'], ['ornament', 'Bola de Navidad'], ['mug', 'Taza'],
     ['gingerbread', 'Galleta de jengibre'], ['candle', 'Vela'], ['snowman', 'Muñeco de nieve'],
